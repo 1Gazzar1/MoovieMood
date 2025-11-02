@@ -1,22 +1,20 @@
 import { useEffect, useState, useContext } from "react";
 import Card from "../Components/Card/Card";
-import "../Styles/Favorites.css";
+import "../Styles/MovieLibrary.css";
 import { filterMovies } from "../Services/movie_searcher";
 import SearchBar from "../Components/SearchBar/SearchBar";
 import { motion as Motion } from "framer-motion";
-import { WatchedContext } from "../Context/WatchedContext/WatchedContextHook";
-import { FavoriteContext } from "../Context/FavoriteContext/FavoriteContextHook";
+import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook";
 
-function WatchedMovies() {
-    const { watchedMovies } = useContext(WatchedContext);
-    const { isFavorite } = useContext(FavoriteContext);
-    const [shownWatchedMovies, setShownWatchedMovies] = useState([]);
+function MovieLibrary() {
+    const { isFavorited, movies } = useContext(LibraryContext);
+    const [shownMovies, setShownMovies] = useState([]);
     const [search, setSearch] = useState("");
     const [showLiked, setShowLiked] = useState(true);
 
     useEffect(() => {
-        setShownWatchedMovies(
-            filterMovies(watchedMovies, {
+        setShownMovies(
+            filterMovies(movies, {
                 title: search,
                 voteCount: 10,
                 rating: 6,
@@ -25,10 +23,10 @@ function WatchedMovies() {
                 genres: [],
             }),
         );
-    }, [search, watchedMovies]);
+    }, [search, movies]);
     const displayedMovies = showLiked
-        ? shownWatchedMovies
-        : shownWatchedMovies.filter((m) => !isFavorite(m.id));
+        ? shownMovies
+        : shownMovies.filter((m) => !isFavorited(m.id));
 
     return (
         <Motion.div
@@ -75,4 +73,4 @@ function WatchedMovies() {
     );
 }
 
-export default WatchedMovies;
+export default MovieLibrary;

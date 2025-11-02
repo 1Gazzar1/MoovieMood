@@ -1,21 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { WatchedContext } from "../Context/WatchedContext/WatchedContextHook.jsx";
 import "../Styles/MovieDetails.css";
 import { getMovieById, getMovieImg } from "../Services/movie_searcher";
 import { MovieContext } from "../Context/MovieContext/MovieContextHook.jsx";
-import { FavoriteContext } from "../Context/FavoriteContext/FavoriteContextHook.jsx";
 import { motion as Motion } from "framer-motion";
+import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook.jsx";
 function MovieDetails() {
     const params = useParams();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const { allMovies } = useContext(MovieContext);
-    const { isFavorite, addFavorite, removeFavorite } =
-        useContext(FavoriteContext);
-    const { isWatched, addWatchedMovie, removeWatchedMovie } =
-        useContext(WatchedContext);
+    const {
+        isWatched,
+        addWatchedMovie,
+        unWatchMovie,
+        isFavorited,
+        favoriteMovie,
+        unFavoriteMovie,
+    } = useContext(LibraryContext);
     const [_secretKey, setSecretKey] = useState([]);
     const [_pirate, setPirate] = useState(false);
 
@@ -116,7 +119,7 @@ function MovieDetails() {
                                     role="img"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 384 512"
-                                    class="svg-inline--fa fa-arrow-down-to-line fa-fw fa-lg"
+                                    className="svg-inline--fa fa-arrow-down-to-line fa-fw fa-lg"
                                 >
                                     <path d="M32 480c-17.7 0-32-14.3-32-32s14.3-32 32-32l320 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 480zM214.6 342.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 242.7 160 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 178.7 73.4-73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-128 128z"></path>
                                 </svg>
@@ -124,8 +127,8 @@ function MovieDetails() {
                             <button
                                 onClick={() =>
                                     isWatched(movie.id)
-                                        ? removeWatchedMovie(movie.id)
-                                        : addWatchedMovie(movie)
+                                        ? unWatchMovie(movie.id)
+                                        : addWatchedMovie(movie.id)
                                 }
                                 className={`watched  
 											${isWatched(movie.id) ? "active" : ""}`}
@@ -139,12 +142,12 @@ function MovieDetails() {
                             </button>
                             <button
                                 onClick={() =>
-                                    isFavorite(movie.id)
-                                        ? removeFavorite(movie.id)
-                                        : addFavorite(movie)
+                                    isFavorited(movie.id)
+                                        ? unFavoriteMovie(movie.id)
+                                        : favoriteMovie(movie.id)
                                 }
                                 className={`heart ${
-                                    isFavorite(movie.id) ? "active" : ""
+                                    isFavorited(movie.id) ? "active" : ""
                                 }`}
                             >
                                 <svg
