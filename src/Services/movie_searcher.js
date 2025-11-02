@@ -58,16 +58,16 @@ function movieHasGenres(movieGenre, userGenre) {
 export function sortMovies(movies, sortBy, asc) {
     if (asc === "1") {
         return sortBy === "release_date"
-            ? movies.sort(
-                  (a, b) => a[sortBy].split("-")[0] - b[sortBy].split("-")[0],
-              )
+            ? movies.sort(sortDates)
             : movies.sort((a, b) => a[sortBy] - b[sortBy]);
     }
     return sortBy === "release_date"
-        ? movies.sort(
-              (a, b) => b[sortBy].split("-")[0] - a[sortBy].split("-")[0],
-          )
+        ? movies.sort(sortDates).reverse()
         : movies.sort((a, b) => b[sortBy] - a[sortBy]);
+}
+
+function sortDates(a, b) {
+    return new Date(a.release_date) - new Date(b.release_date);
 }
 
 export function getMovieImg(file_path) {

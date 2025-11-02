@@ -11,7 +11,7 @@ import { MovieContext } from "./MovieContextHook";
 export function MovieProvider({ children }) {
     const [allMovies, setAllMovies] = useState([]);
     const [sortOptions, setSortOptions] = useState({
-        sortBy: "vote_count",
+        sortBy: "release_date",
         asc: "0",
     });
     const [page, setPage] = useState(1);
