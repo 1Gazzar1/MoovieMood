@@ -2,16 +2,23 @@ import styles from "./Card.module.css";
 import { getMovieImg } from "../../Services/movie_searcher";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { FavoriteContext } from "../../Context/FavoriteContext/FavoriteContextHook";
-import { WatchedContext } from "../../Context/WatchedContext/WatchedContextHook";
+import { LibraryContext } from "../../Context/LibraryContext/LibraryContextHook";
+import WatchedAt from "../WatchedAt/WatchedAt";
 function Card({ movie }) {
-    const { isFavorite, addFavorite, removeFavorite } =
-        useContext(FavoriteContext);
-    const { isWatched, addWatchedMovie, removeWatchedMovie } =
-        useContext(WatchedContext);
+    const {
+        isWatched,
+        addWatchedMovie,
+        unWatchMovie,
+        isFavorited,
+        favoriteMovie,
+        unFavoriteMovie,
+    } = useContext(LibraryContext);
+
+    // only get the date if it's watched.
 
     return (
         <div className={styles.card}>
+            <WatchedAt movieId={movie.id} />
             <Link to={`/movie/${movie.id}`} className={styles.poster}>
                 <img
                     className={styles.poster}
@@ -27,12 +34,12 @@ function Card({ movie }) {
             </p>
             <button
                 onClick={() =>
-                    isFavorite(movie.id)
-                        ? removeFavorite(movie.id)
-                        : addFavorite(movie.id)
+                    isFavorited(movie.id)
+                        ? unFavoriteMovie(movie.id)
+                        : favoriteMovie(movie.id)
                 }
                 className={`${styles.heart} ${
-                    isFavorite(movie.id) ? styles.active : ""
+                    isFavorited(movie.id) ? styles.active : ""
                 }`}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -42,7 +49,7 @@ function Card({ movie }) {
             <button
                 onClick={() =>
                     isWatched(movie.id)
-                        ? removeWatchedMovie(movie.id)
+                        ? unWatchMovie(movie.id)
                         : addWatchedMovie(movie.id)
                 }
                 className={`${styles.watched} 

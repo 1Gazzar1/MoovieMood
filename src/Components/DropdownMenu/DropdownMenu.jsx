@@ -36,7 +36,7 @@ function DropdownMenu() {
 					>
 						Home
 					</MotionLink>
-					<MotionLink
+					{/* <MotionLink
 						to={"/favorites"}
 						whileHover={{
 							scale: 1.1,
@@ -45,16 +45,16 @@ function DropdownMenu() {
 						className={styles.link}
 					>
 						Favorites
-					</MotionLink>
+					</MotionLink> */}
 					<MotionLink
-						to={"/watched"}
+						to={"/library"}
 						whileHover={{
 							scale: 1.1,
 							rotate: "2.5deg",
 						}}
 						className={styles.link}
 					>
-						Watched
+						Library
 					</MotionLink>
 				</nav>
 			</motion.div>
