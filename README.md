@@ -78,12 +78,6 @@ Open an issue or send a PR — every bit helps.
 
 - replace the BrowserRouter with a `createBrowserRouter` 
 
-- remove the favorites page and keep the watched cuz it serves both purposes 
-
-- i should probably merge the favorite and watched context e.g. {id: 99 , watched: true, favorited: false}
-
-- add when watched / liked feature 
-
 - add a movie stats page (maybe a profile page) so it shows (most watched genre, avg rating), maybe even a pi diagram for genres and a no. movies and time diagram 
 
 - add a random movie button in the merged watched page (or profile page)

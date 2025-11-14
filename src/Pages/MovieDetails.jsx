@@ -5,6 +5,7 @@ import { getMovieById, getMovieImg } from "../Services/movie_searcher";
 import { MovieContext } from "../Context/MovieContext/MovieContextHook.jsx";
 import { motion as Motion } from "framer-motion";
 import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook.jsx";
+import WatchedAt from "../Components/WatchedAt/WatchedAt.jsx";
 function MovieDetails() {
     const params = useParams();
     const [movie, setMovie] = useState(null);
@@ -79,7 +80,10 @@ function MovieDetails() {
                             <h1>{movie.title}</h1>
                             <h3>{movie.release_date}</h3>
                         </div>
-                        <img src={getMovieImg(movie.poster_path)} />
+                        <div className="imgContainer">
+                            <img src={getMovieImg(movie.poster_path)} />
+                            <WatchedAt movieId={movie.id} />
+                        </div>
                         <div className="belowImg">
                             {/* {pirate && (
 								<a

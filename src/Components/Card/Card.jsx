@@ -3,6 +3,7 @@ import { getMovieImg } from "../../Services/movie_searcher";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LibraryContext } from "../../Context/LibraryContext/LibraryContextHook";
+import WatchedAt from "../WatchedAt/WatchedAt";
 function Card({ movie }) {
     const {
         isWatched,
@@ -13,8 +14,11 @@ function Card({ movie }) {
         unFavoriteMovie,
     } = useContext(LibraryContext);
 
+    // only get the date if it's watched.
+
     return (
         <div className={styles.card}>
+            <WatchedAt movieId={movie.id} />
             <Link to={`/movie/${movie.id}`} className={styles.poster}>
                 <img
                     className={styles.poster}

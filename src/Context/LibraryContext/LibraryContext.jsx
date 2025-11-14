@@ -67,7 +67,9 @@ export function LibraryProvider({ children }) {
             }),
         );
     };
-
+    const getMovieWatchedAt = (id) => {
+        return library.find((m) => m.id === id).watchedAt;
+    };
     const movies = getMoviesByIds(
         allMovies,
         library.map((m) => m.id),
@@ -80,6 +82,7 @@ export function LibraryProvider({ children }) {
         isFavorited,
         favoriteMovie,
         unFavoriteMovie,
+        getMovieWatchedAt,
         movies,
     };
     return (
