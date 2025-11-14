@@ -26,7 +26,7 @@ function TagList({tags,deleteTag,addTag,tagName,onChange,autoCompleteList}) {
 		onChange({ target: { value: "" } }); // Reset the input by simulating an empty input change
 	}
 	return (<>
-		<div className={styles.tagsContianer}>
+		<div className={styles.tagsContainer}>
 			<form onSubmit={(e) => submit(e)}>
 				<input
 					value={tagName}

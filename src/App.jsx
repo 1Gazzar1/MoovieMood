@@ -16,7 +16,7 @@ function App() {
             errorElement: <Error />,
             children: [
                 { index: true, element: <Home /> },
-                { path: "movieDetails", element: <MovieDetails /> },
+                { path: "movie/:id", element: <MovieDetails /> },
                 { path: "library", element: <MovieLibrary /> },
             ],
         },

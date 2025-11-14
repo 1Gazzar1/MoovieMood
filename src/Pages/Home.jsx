@@ -24,6 +24,7 @@ function Home() {
         getNextPage,
         getPrevPage,
     } = useContext(MovieContext);
+    console.count(`re-rendered`);
 
     return (
         <Motion.div

@@ -1,83 +1,93 @@
 * {
-  box-sizing:border-box;
+    box-sizing: border-box;
 }
 
+/* Container for all cards */
 .cardList {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
+
+/* Filters container */
 .filtersContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0px 5%;
 }
+
+/* Common filter styles */
 .filterSettings,
 .filterControls {
-  background-color: #1e1e1e;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem auto;
-  color: #f1f1f1;
-  font-family: "Segoe UI", sans-serif;
-  flex-wrap: wrap;
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+    color: #f1f1f1;
+    font-family: "Segoe UI", sans-serif;
 }
 
-.filterControls {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+/* Filter settings (inputs, labels, taglists) */
 .filterSettings {
-  flex: 4 1 0;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.filterControls {
-  flex: 1 1 0;
-}
-.filterSettings label {
-  font-weight: bold;
-  margin-bottom: 0.2rem;
-  display: block;
-  text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex: 4 1 0;
+    justify-content: space-between;
 }
 
-.filterSettings input[type="text"] {
+.filterSettings > div {
+    flex: 1 1 180px; 
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.filterSettings label {
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 1rem; 
+}
+
+.filterSettings input[type="text"],
+.filterSettings input[type="range"],
+select {
+    width: 100%;
+    border-radius: 6px;
+    padding: 0.45rem; /* smaller padding */
+    font-size: 0.95rem;
     background-color: #2c2c2c;
     border: 1px solid #444;
-    padding: 0.5rem;
-    border-radius: 6px;
-    color:  #ff0000;
-    font-size: large;
-    width: 100%;
-    overflow: hidden;
+    color: #fff;
 }
 
+
 .filterSettings input[type="range"] {
-    width: 100%;
     accent-color: #ff5050;
     cursor: pointer;
 }
 
-select {
-    background-color: #2c2c2c;
-    border: 1px solid #444;
-    padding: 0.5rem;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 1.2rem;
+/* Filter controls (sort dropdowns etc.) */
+.filterControls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
 }
 
+/* General styling */
 select:focus,
 input:focus {
     outline: none;
@@ -85,8 +95,8 @@ input:focus {
 }
 
 label {
-    margin-top: 0.5rem;
-    font-size: 1.2rem;
+    margin-top: 0.3rem;
+    font-size: 1.1rem;
 }
 
 h2 {
@@ -94,19 +104,35 @@ h2 {
     color: #eee;
 }
 
+/* Responsive tweaks */
+@media (max-width: 900px) {
+    .filtersContainer {
+        flex-direction: column;
+        align-items: center;
+    }
 
-@media (max-width : 700px){
-  .filtersContainer{
-    flex-direction: column;
-  }
-  .filterSettings{
-    justify-content: center;
-  }
-  
-  .filterControls{
-    justify-content: center;
-  }
-  .cardList{
-    margin: auto;
-  }
+    .filterSettings,
+    .filterControls {
+        max-width: 95%;
+        flex: 1 1 auto;
+    }
+
+    .filterSettings > div {
+        flex: 1 1 0;
+    }
+
+    .filterControls {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px) {
+
+
+    .filterSettings input[type="text"],
+    .filterSettings input[type="range"],
+    select {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
 }

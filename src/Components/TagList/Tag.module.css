@@ -1,13 +1,13 @@
-:root{
-    --tag-color :   hsl(0, 100%, 66%,0.5);
-    --tag-border :  rgb(0, 0, 0);
-    --tag-shadow : 0 0 2px 0 rgba(255, 255, 255, 0.5);
+:root {
+    --tag-color: hsl(0, 100%, 66%, 0.5);
+    --tag-border: rgb(0, 0, 0);
+    --tag-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5);
 }
-.tagsContianer {
+.tagsContainer {
     position: relative;
     text-align: center;
     width: fit-content;
-    font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .tags {
     display: flex;
@@ -15,35 +15,35 @@
     justify-content: center;
     flex-direction: row;
 }
-.tag { 
+.tag {
     position: relative;
     width: fit-content;
     background-color: var(--tag-color);
-    border: 1px solid var(--tag-border) ;
+    border: 1px solid var(--tag-border);
     box-shadow: var(--tag-shadow);
     border-radius: 2px;
 }
 
-.tag p { 
+.tag p {
     padding-right: 1rem;
     padding-left: 0.5rem;
 }
 .tag button {
     position: absolute;
     height: 100%;
-    top : 0 ;
-    right : 0;
-    background:none;
+    top: 0;
+    right: 0;
+    background: none;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
 }
-.tag button svg { 
+.tag button svg {
     aspect-ratio: 1/1;
 }
-.autoComplete{
-    display: flex;  
+.autoComplete {
+    display: flex;
     position: absolute;
     flex-direction: column;
     align-items: flex-start;

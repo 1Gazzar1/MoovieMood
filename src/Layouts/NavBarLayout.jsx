@@ -4,8 +4,8 @@ import DropdownMenu from "../Components/DropdownMenu/DropdownMenu";
 function NavBarLayout() {
     return (
         <>
+            <DropdownMenu />
             <Outlet />
-            <DropdownMenu />;
         </>
     );
 }
