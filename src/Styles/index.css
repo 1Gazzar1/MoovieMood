@@ -47,3 +47,9 @@
         /* transform: rotateX(180deg); */
     }
 }
+.recharts-wrapper > svg > g {
+    outline: none !important;
+}
+.recharts-wrapper > svg {
+    outline: none !important;
+}
