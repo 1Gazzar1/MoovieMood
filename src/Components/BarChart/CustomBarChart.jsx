@@ -6,7 +6,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const CustomBarChart = ({ data }) => {
     const [width, setWidth] = useState(window.innerWidth);

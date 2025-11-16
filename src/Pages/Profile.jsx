@@ -22,11 +22,11 @@ function Profile() {
     const { movies, getMovieWatchedAt } = useContext(LibraryContext);
     const COLORS = ["#8884d8", "#7a76c2", "#5e5b96", "#535285"];
     const numberOfMovies = getTotalMovies(movies);
-    const watchedGenres = useMemo(getMostNWatchedGenres(movies, 4), []);
-    const watchedActors = useMemo(getMostNWatchedActors(movies, 5), []);
+    const watchedGenres = useMemo(() => getMostNWatchedGenres(movies, 4), [movies]);
+    const watchedActors = useMemo(() => getMostNWatchedActors(movies, 5), [movies]);
     const watchedMovies = useMemo(
-        getWatchedMoviesPerMonth(movies, 6, getMovieWatchedAt),
-        [],
+        () => getWatchedMoviesPerMonth(movies, 6, getMovieWatchedAt),
+        [movies],
     );
 
     return (
