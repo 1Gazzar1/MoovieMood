@@ -83,7 +83,7 @@ select {
     gap: 0.5rem;
     flex: 1 1 0;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     font-weight: bold;
 }
 
