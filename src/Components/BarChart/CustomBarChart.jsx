@@ -18,7 +18,7 @@ const CustomBarChart = ({ data }) => {
     }, []);
     const fontSize = width > 768 ? 12 : 8;
     return (
-        <div style={{ width: "100%", height: "180px", marginTop: 8 }}>
+        <div style={{ width: "100%", height: "300px", marginTop: 8 }}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={[...data.reverse()]}

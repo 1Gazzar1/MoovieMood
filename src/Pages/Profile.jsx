@@ -4,6 +4,13 @@ import ProfileCard from "../Components/ProfileCard/ProfileCard";
 import "../Styles/Profile.css";
 import { PieChartWithCustomizedLabel } from "../Components/PieChart/PieChartWithCustomizedLabel";
 import CustomBarChart from "../Components/BarChart/CustomBarChart";
+import {
+    getAvgRating,
+    getMostNWatchedActors,
+    getMostNWatchedGenres,
+    getTotalMovies,
+    getPastNMonths,
+} from "../util/ProfileUtils";
 
 // library format : { id : number,favorited:bool, watchedAt: dateString}
 function Profile() {
@@ -135,62 +142,6 @@ function Profile() {
             </div>
         </>
     );
-}
-
-// util functions
-
-function getTotalMovies(movies) {
-    if (movies) return movies.length;
-    return 0;
-}
-function getAvgRating(movies) {
-    if (movies)
-        return (
-            movies.reduce((acc, movie) => acc + movie.vote_average, 0) /
-            movies.length
-        ).toFixed(1);
-}
-function getMostNWatchedGenres(movies, noGenres = 4) {
-    const data = {};
-    movies.forEach((movie) => {
-        for (const genre of movie.genres) {
-            if (data[genre]) data[genre] += 1;
-            else data[genre] = 1;
-        }
-    });
-
-    return Object.keys(data)
-        .map((genre) => {
-            return { name: genre, value: data[genre] };
-        })
-        .sort((a, b) => a.value > b.value)
-        .slice(0, noGenres);
-}
-function getPastNMonths(n = 6) {
-    let now = Date.now();
-    let output = [];
-    for (let i = 0; i < n; i++) {
-        const temp = new Date(now);
-        output.push(temp.toISOString().slice(0, 7));
-        now -= 1000 * 60 * 60 * 24 * 30;
-    }
-    return output.reverse();
-}
-function getMostNWatchedActors(movies, noActors = 6) {
-    const data = {};
-    movies.forEach((movie) => {
-        for (const cast of movie.cast) {
-            if (data[cast]) data[cast] += 1;
-            else data[cast] = 1;
-        }
-    });
-
-    return Object.keys(data)
-        .map((cast) => {
-            return { name: cast, value: data[cast] };
-        })
-        .sort((a, b) => a.value > b.value)
-        .slice(0, noActors);
 }
 
 export default Profile;
