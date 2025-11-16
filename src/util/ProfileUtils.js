@@ -1,5 +1,4 @@
 // util export functions
-
 export function getTotalMovies(movies) {
     if (movies) return movies.length;
     return 0;
@@ -52,4 +51,18 @@ export function getMostNWatchedActors(movies, noActors = 6) {
         })
         .sort((a, b) => a.value - b.value)
         .slice(0, noActors);
+}
+export function getWatchedMoviesPerMonth(movies, noMonths,getMovieWatchedAt) {
+    const pastMonths = getPastNMonths(noMonths);
+    const data = {};
+    movies.forEach((movie) => {
+        const date = getMovieWatchedAt(movie.id).slice(0, 7);
+        if (!pastMonths.includes(date)) return;
+        if (data[date]) data[date]++;
+        else data[date] = 1;
+    });
+
+    return Object.keys(data).map((str) => {
+        return { name: str, value: data[str] };
+    });
 }
