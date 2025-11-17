@@ -12,7 +12,7 @@ import { getMoviesByIds } from "../../Services/movie_searcher";
 // }[]
 export function LibraryProvider({ children }) {
     const [library, setLibrary] = useState(
-        JSON.parse(localStorage.getItem("library")) || [],
+        JSON.parse(localStorage.getItem("library") || "[]"),
     );
     // so i can fetch it through ids
     const { allMovies } = useContext(MovieContext);

@@ -1,4 +1,4 @@
-.container{
+.container {
     cursor: pointer;
     position: fixed;
     background-color: black;
@@ -6,12 +6,13 @@
     right: 5%;
     height: fit-content;
     width: 10%;
+    min-width: 100px;
     display: flex;
     z-index: 10000000000;
 }
 .container::after,
-.container::before{
-    content: '';
+.container::before {
+    content: "";
     position: absolute;
     right: 0;
     width: 10px;
@@ -19,9 +20,8 @@
     background-color: aliceblue;
     border: 2px solid rgb(0, 0, 0);
 }
-.container::before{
+.container::before {
     left: 0;
-
 }
 
 .film {
@@ -29,7 +29,7 @@
     flex-direction: column;
     width: 100%;
 }
-.link { 
+.link {
     margin: 10% auto;
     width: 70%;
     border-radius: 10%;
@@ -40,17 +40,14 @@
     align-items: center;
     text-decoration: none;
     color: black;
-    font-size: 1.2vw;
+    font-size: 1.2rem;
     font-weight: bold;
     font-family: "Poppins";
 }
 
 @media (max-width : 768px) {
-    .container {
-        width: 20%;
-    }
     .link{
-        font-size: 2.4vw;
+        font-size: 0.8rem;
     }
     
 }

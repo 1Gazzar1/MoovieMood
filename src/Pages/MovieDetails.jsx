@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "../Styles/MovieDetails.css";
 import { getMovieById, getMovieImg } from "../Services/movie_searcher";
 import { MovieContext } from "../Context/MovieContext/MovieContextHook.jsx";
 import { motion as Motion } from "framer-motion";
 import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook.jsx";
 import WatchedAt from "../Components/WatchedAt/WatchedAt.jsx";
+import RandomMovieButton from "../Components/RandomMovieButton/RandomMovieButton.jsx";
 function MovieDetails() {
     const params = useParams();
+    const location = useLocation();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -54,6 +56,9 @@ function MovieDetails() {
         window.addEventListener("keydown", handler);
         return () => window.removeEventListener("keydown", handler);
     }, []);
+    const pathHasRandom = !!(
+        new URLSearchParams(location.search).get("random") === "true"
+    );
 
     return (
         <Motion.div
@@ -71,6 +76,7 @@ function MovieDetails() {
             }}
             transition={{ duration: 0.4, type: "ease" }}
         >
+            {pathHasRandom ? <RandomMovieButton /> : "" }
             {error.length > 0 && <h1>{error}</h1>}
             {loading && "LOADING"}
             {!loading && movie && (

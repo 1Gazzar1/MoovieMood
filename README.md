@@ -76,8 +76,6 @@ Open an issue or send a PR — every bit helps.
 
 ## Todos ?
 
-- add a movie stats page (maybe a profile page) so it shows (most watched genre, avg rating), maybe even a pi diagram for genres and a no. movies and time diagram 
+- add AI bot to recommend movies based on mood and other context
 
-- add a random movie button in the merged watched page (or profile page)
-
-- add AI bot to recommend movies based on mood and other context 
+- add pagination to movieLibrary
