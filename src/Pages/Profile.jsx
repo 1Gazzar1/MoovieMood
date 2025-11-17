@@ -17,7 +17,7 @@ import FireIcon from "../Components/icons/FireIcon";
 import CalenderIcon from "../Components/icons/CalenderIcon";
 import ChartIcon from "../Components/icons/CharIcon";
 import NoMovies from "../Components/NoMovies/NoMovies";
-
+import { motion as Motion } from "framer-motion";
 // library format : { id : number,favorited:bool, watchedAt: dateString}
 function Profile() {
     const { movies, getMovieWatchedAt } = useContext(LibraryContext);
@@ -37,9 +37,22 @@ function Profile() {
     );
 
     return (
-        <>
+        <Motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{
+                y: 0,
+                opacity: 1,
+            }}
+            transition={{ type: "ease", duration: 0.6 }}
+        >
             {movies && movies.length > 0 ? (
                 <>
+                    <div
+                        className="profilePageStatement"
+                    >
+                        <h1>Your Movie Stats</h1>
+                        <p style={{color:"#b5b5b5"}}>yes, you watch trash sometimes.</p>
+                    </div>
                     <div className="profileCardContainer">
                         {/* total movies watched card */}
                         <ProfileCard
@@ -123,7 +136,7 @@ function Profile() {
             ) : (
                 <NoMovies />
             )}
-        </>
+        </Motion.div>
     );
 }
 

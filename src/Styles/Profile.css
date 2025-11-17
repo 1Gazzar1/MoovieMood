@@ -6,7 +6,7 @@
     max-width: 1200px;
     margin: auto;
     padding: 20px;
-    justify-content: center; 
+    justify-content: center;
     margin-bottom: 30px;
 
     background: linear-gradient(180deg, #151515 0%, #1a1a1a 100%);
@@ -29,4 +29,34 @@
     box-shadow:
         0 14px 32px rgba(0, 0, 0, 0.65),
         inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.profilePageStatement {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid #2b2b2b;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.8;
+    background: linear-gradient(180deg, #242424 0%, #181818 100%);
+    margin-bottom: 30px;
+}
+.profilePageStatement h1 {
+    margin-top: 30px;
+    font-size: 45px;
+}
+
+@media (max-width: 767px) {
+    .profilePageStatement h1 {
+        font-size: 30px;
+    }
 }

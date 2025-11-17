@@ -23,7 +23,7 @@ export function getMostNWatchedGenres(movies, noGenres = 4) {
         .map((genre) => {
             return { name: genre, value: data[genre] };
         })
-        .sort((a, b) => a.value - b.value)
+        .sort((a, b) => b.value - a.value)
         .slice(0, noGenres);
 }
 export function getPastNMonths(n = 6) {
@@ -49,10 +49,10 @@ export function getMostNWatchedActors(movies, noActors = 6) {
         .map((cast) => {
             return { name: cast, value: data[cast] };
         })
-        .sort((a, b) => a.value - b.value)
+        .sort((a, b) => b.value - a.value)
         .slice(0, noActors);
 }
-export function getWatchedMoviesPerMonth(movies, noMonths,getMovieWatchedAt) {
+export function getWatchedMoviesPerMonth(movies, noMonths, getMovieWatchedAt) {
     const pastMonths = getPastNMonths(noMonths);
     const data = {};
     movies.forEach((movie) => {
