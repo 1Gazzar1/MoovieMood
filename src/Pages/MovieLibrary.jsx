@@ -6,6 +6,7 @@ import SearchBar from "../Components/SearchBar/SearchBar";
 import { motion as Motion } from "framer-motion";
 import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook";
 import NoMovies from "../Components/NoMovies/NoMovies";
+import RandomMovieButton from "../Components/RandomMovieButton/RandomMovieButton";
 
 function MovieLibrary() {
     const { isFavorited, movies } = useContext(LibraryContext);
@@ -54,6 +55,7 @@ function MovieLibrary() {
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
+                    <RandomMovieButton />
                     <div className="like-btn">
                         <label htmlFor="switch">Show Liked</label>
                         <div className="toggle-btn">
