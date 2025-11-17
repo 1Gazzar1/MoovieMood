@@ -5,6 +5,7 @@ import { filterMovies } from "../Services/movie_searcher";
 import SearchBar from "../Components/SearchBar/SearchBar";
 import { motion as Motion } from "framer-motion";
 import { LibraryContext } from "../Context/LibraryContext/LibraryContextHook";
+import NoMovies from "../Components/NoMovies/NoMovies";
 
 function MovieLibrary() {
     const { isFavorited, movies } = useContext(LibraryContext);
@@ -44,31 +45,37 @@ function MovieLibrary() {
             }}
             transition={{ duration: 0.4, type: "ease" }}
         >
-            <div className="searchBar">
-                <SearchBar
-                    labelText={"Title"}
-                    searchVal={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-            </div>
-            <div className="like-btn">
-                <label htmlFor="switch">Show Liked</label>
-                <div className="toggle-btn">
-                    <input
-                        type="checkbox"
-                        id="switch"
-                        onChange={() => setShowLiked(!showLiked)}
-                        checked={showLiked}
-                    />
-                    <label htmlFor="switch"></label>
-                </div>
-            </div>
+            {movies && movies.length > 0 ? (
+                <>
+                    <div className="searchBar">
+                        <SearchBar
+                            labelText={"Title"}
+                            searchVal={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+                    <div className="like-btn">
+                        <label htmlFor="switch">Show Liked</label>
+                        <div className="toggle-btn">
+                            <input
+                                type="checkbox"
+                                id="switch"
+                                onChange={() => setShowLiked(!showLiked)}
+                                checked={showLiked}
+                            />
+                            <label htmlFor="switch"></label>
+                        </div>
+                    </div>
 
-            <div className="cardList">
-                {displayedMovies.map((m) => (
-                    <Card key={m.id} movie={m} />
-                ))}
-            </div>
+                    <div className="cardList">
+                        {displayedMovies.map((m) => (
+                            <Card key={m.id} movie={m} />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <NoMovies />
+            )}
         </Motion.div>
     );
 }
