@@ -1,12 +1,8 @@
 import { useState } from "react";
 import styles from "./AiChat.module.css";
 import FilmIcon from "../icons/FilmIcon";
-import {
-    getAiResponse_ai,
-    getAiResponse_RAG,
-    needsRAG,
-} from "../../api/aiChat";
-import { formatAiQuery } from "../../util/formatQueryUtil";
+import { getAiResponse, getCombinedLists } from "../../util/aiChatUtil";
+import Markdown from "markdown-to-jsx";
 
 function AiChat() {
     const [displayChat, setDisplayChat] = useState(false);
@@ -36,34 +32,34 @@ export function Chat() {
     const [userInput, setUserInput] = useState("");
     const [aiLoading, setAiLoading] = useState(false);
 
-    async function sendButtonOnClick() {
+    async function formOnSubmit(e) {
+        e.preventDefault();
         if (!userInput.trim()) return;
 
         setUserInput("");
         setUserMessages((msgs) => [...msgs, userInput]);
 
-        await getAiResponse(userInput);
+        await addAiMessage(userInput);
     }
 
-    async function getAiResponse(userInput) {
+    async function addAiMessage(userInput) {
         setAiLoading(true);
-
-        let res;
-        const RAG = await needsRAG(userInput);
-        console.log(RAG);
-        if (RAG) {
-            res = await getAiResponse_RAG(userInput);
-        } else {
-            const formattedMsgs = formatAiQuery([
-                ...getCombinedLists(AiMessages, userMessages),
+        try {
+            const res = await getAiResponse(
                 userInput,
+                AiMessages,
+                userMessages,
+            );
+            setAiMessages((msgs) => [...msgs, res.data.response]);
+        } catch (error) {
+            console.error(error.message);
+            setAiMessages((msgs) => [
+                ...msgs,
+                "something went wrong 🤕, please try again later",
             ]);
-            console.log(formattedMsgs);
-            res = await getAiResponse_ai(formattedMsgs);
+        } finally {
+            setAiLoading(false);
         }
-
-        setAiLoading(false);
-        setAiMessages((msgs) => [...msgs, res.data.response]);
     }
 
     function getMessages() {
@@ -80,19 +76,22 @@ export function Chat() {
     return (
         <>
             <div className={styles.messagesContainer}>{getMessages()}</div>
-            <form className={styles.inputArea} onSubmit={sendButtonOnClick}>
-                <input
-                    id="user-text-input"
-                    type="text"
+            <form className={styles.inputArea} onSubmit={formOnSubmit}>
+                <textarea
                     className={styles.inputField}
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     placeholder="Type your message..."
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault(); // prevent new line
+                            formOnSubmit(e); // your submit handler
+                        }
+                    }}
                 />
                 <button
                     id="submit"
                     className={styles.sendButton}
-                    onClick={sendButtonOnClick}
                     disabled={!userInput.trim() || aiLoading}
                 >
                     Send
@@ -104,20 +103,10 @@ export function Chat() {
 
 export function Message({ message, Ai }) {
     return (
-        <span className={`${styles.message} ${Ai ? styles.ai : ""}`}>
-            {message}
-        </span>
+        <div className={`${styles.message} ${Ai ? styles.ai : ""}`}>
+            <Markdown>{message}</Markdown>
+        </div>
     );
 }
 
 export default AiChat;
-
-function getCombinedLists(list1, list2) {
-    let messages = [];
-    const combinedLen = list1.length + list2.length;
-    for (let i = 0; i < combinedLen; i++) {
-        if (i % 2 == 0) messages.push(list1[Math.floor(i / 2)]);
-        else messages.push(list2[Math.floor(i / 2)]);
-    }
-    return messages;
-}
