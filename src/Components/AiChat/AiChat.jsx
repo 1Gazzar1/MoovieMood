@@ -1,6 +1,12 @@
 import { useState } from "react";
 import styles from "./AiChat.module.css";
 import FilmIcon from "../icons/FilmIcon";
+import {
+    getAiResponse_ai,
+    getAiResponse_RAG,
+    needsRAG,
+} from "../../api/aiChat";
+import { formatAiQuery } from "../../util/formatQueryUtil";
 
 function AiChat() {
     const [displayChat, setDisplayChat] = useState(false);
@@ -36,38 +42,39 @@ export function Chat() {
         setUserInput("");
         setUserMessages((msgs) => [...msgs, userInput]);
 
-        await getAiResponse();
+        await getAiResponse(userInput);
     }
 
-    async function getAiResponse() {
+    async function getAiResponse(userInput) {
         setAiLoading(true);
-        await sleep(2000);
+
+        let res;
+        const RAG = await needsRAG(userInput);
+        console.log(RAG);
+        if (RAG) {
+            res = await getAiResponse_RAG(userInput);
+        } else {
+            const formattedMsgs = formatAiQuery([
+                ...getCombinedLists(AiMessages, userMessages),
+                userInput,
+            ]);
+            console.log(formattedMsgs);
+            res = await getAiResponse_ai(formattedMsgs);
+        }
+
         setAiLoading(false);
-        setAiMessages((msgs) => [...msgs, "ai response"]);
+        setAiMessages((msgs) => [...msgs, res.data.response]);
     }
 
     function getMessages() {
-        let messages = [];
-        const combinedLen = AiMessages.length + userMessages.length;
-        for (let i = 0; i < combinedLen; i++) {
-            if (i % 2 == 0)
-                messages.push(
-                    <Message
-                        key={`ai-${i}`}
-                        message={AiMessages[Math.floor(i / 2)]}
-                        Ai={true}
-                    />,
-                );
-            else
-                messages.push(
-                    <Message
-                        key={`user-${i}`}
-                        message={userMessages[Math.floor(i / 2)]}
-                        Ai={false}
-                    />,
-                );
-        }
-        return messages;
+        const combinedList = getCombinedLists(AiMessages, userMessages);
+        return combinedList.map((msg, i) => {
+            return i % 2 === 0 ? (
+                <Message key={`ai-${i}`} message={msg} Ai={true} />
+            ) : (
+                <Message key={`user-${i}`} message={msg} Ai={false} />
+            );
+        });
     }
 
     return (
@@ -75,6 +82,7 @@ export function Chat() {
             <div className={styles.messagesContainer}>{getMessages()}</div>
             <form className={styles.inputArea} onSubmit={sendButtonOnClick}>
                 <input
+                    id="user-text-input"
                     type="text"
                     className={styles.inputField}
                     value={userInput}
@@ -82,6 +90,7 @@ export function Chat() {
                     placeholder="Type your message..."
                 />
                 <button
+                    id="submit"
                     className={styles.sendButton}
                     onClick={sendButtonOnClick}
                     disabled={!userInput.trim() || aiLoading}
@@ -103,6 +112,12 @@ export function Message({ message, Ai }) {
 
 export default AiChat;
 
-export function sleep(ms) {
-    return new Promise((res) => setTimeout(res, ms));
+function getCombinedLists(list1, list2) {
+    let messages = [];
+    const combinedLen = list1.length + list2.length;
+    for (let i = 0; i < combinedLen; i++) {
+        if (i % 2 == 0) messages.push(list1[Math.floor(i / 2)]);
+        else messages.push(list2[Math.floor(i / 2)]);
+    }
+    return messages;
 }
