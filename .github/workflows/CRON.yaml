@@ -4,7 +4,7 @@ on:
   schedule: # runs on the 1st of every month
     - cron: "0 0 1 * *"
 
-permissions: 
+permissions:
   contents: write
 
 jobs:
@@ -26,13 +26,37 @@ jobs:
       - name: run python script # this should return a movies.json file at root
         run: python3 ./scripts/fetch_movies.py
 
+      - name: upload generated file as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: movies # folder name
+          path: ./movies.json # path to the generated file.
+
       - name: Move generated file # replace the old file
         run: mv ./movies.json ./src/assets/final_movies_v4.json
 
-      - name: Commit and Push changes 
-        run: | 
+      - name: Commit and Push changes
+        run: |
           git config --global user.name "github-action's bot"
           git config --global user.email "fake@mail.com"
           git add ./src/assets/final_movies_v4.json 
           git commit -m 'Automated Commit - refreshing movies'
-          git push 
+          git push
+  update-database:
+    runs-on: ubuntu-latest
+    name: update embedding in db
+    needs: fetch-movies
+
+    steps:
+      - name: download the artifact.
+        uses: actions/download-artifact@v4
+        with:
+          name: movies # should return 'movies.json'
+      - name: run the api endpoint
+        run: |
+          FULL_URL="${{ vars.API_URL }}/embed/batch";
+          body=$(cat "movies.json"); 
+          curl --request POST \
+          --url $FULL_URL
+          --header 'Content-Type: application/json' \
+          --data $body
