@@ -57,6 +57,6 @@ jobs:
           FULL_URL="${{ vars.API_URL }}/embed/batch";
           body=$(cat "movies.json"); 
           curl --request POST \
-          --url $FULL_URL
+          --url $FULL_URL \
           --header 'Content-Type: application/json' \
           --data $body
