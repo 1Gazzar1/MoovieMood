@@ -49,14 +49,28 @@ jobs:
     needs: fetch-movies
 
     steps:
-      - name: download the artifact.
+      - name: download the artifact
         uses: actions/download-artifact@v4
         with:
-          name: movies # should return 'movies.json'
+          name: movies
+    
+      - name: install jq for json manipulation
+        run: sudo apt install -y jq
+    
+      - name: split the json file into chunks
+        run: |
+          CHUNK_SIZE=1000
+          ARRAY_LENGTH=$(jq '. | length' "movies.json")
+          for ((i=0; i<$ARRAY_LENGTH; i+=CHUNK_SIZE)); do
+            jq ".[$i:$((i+CHUNK_SIZE))]" movies.json > "chunk_$i.json"
+          done
+    
       - name: run the api endpoint
         run: |
-          FULL_URL="${{ vars.API_URL }}/embed/batch";
-          curl --request POST \
-          --url $FULL_URL \
-          --header 'Content-Type: application/json' \
-          --data-binary "@movies.json"
+          FULL_URL="${{ vars.API_URL }}/embed/batch"
+          for chunk_file in chunk_*.json; do
+            curl --request POST \
+                 --url $FULL_URL \
+                 --header 'Content-Type: application/json' \
+                 --data-binary "@$chunk_file"
+          done
