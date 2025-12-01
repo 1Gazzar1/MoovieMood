@@ -3,6 +3,7 @@ name: Movies CRON
 on:
   schedule: # runs on the 1st of every month
     - cron: "0 0 1 * *"
+  workflow_dispatch: # to allow re-runs from the github ui
 
 permissions:
   contents: write
