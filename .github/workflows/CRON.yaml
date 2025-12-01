@@ -56,8 +56,7 @@ jobs:
       - name: run the api endpoint
         run: |
           FULL_URL="${{ vars.API_URL }}/embed/batch";
-          body=$(cat "movies.json"); 
           curl --request POST \
           --url $FULL_URL \
           --header 'Content-Type: application/json' \
-          --data $body
+          --data-binary "@movies.json"
