@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./AiChat.module.css";
 import FilmIcon from "../icons/FilmIcon";
 import NewChatIcon from "../icons/NewChatIcon";
 import { getAiResponse, getCombinedLists } from "../../util/aiChatUtil";
 import Markdown from "markdown-to-jsx";
+import { LibraryContext } from "../../Context/LibraryContext/LibraryContextHook";
 
 export function AiChat() {
     const [AiMessages, setAiMessages] = useState([
@@ -13,6 +14,7 @@ export function AiChat() {
     const [userInput, setUserInput] = useState("");
     const [aiLoading, setAiLoading] = useState(false);
     const [displayChat, setDisplayChat] = useState(false);
+    const { ids } = useContext(LibraryContext);
 
     function resetChat() {
         setAiLoading(false);
@@ -37,6 +39,7 @@ export function AiChat() {
                 userInput,
                 AiMessages,
                 userMessages,
+                ids,
             );
             setAiMessages((msgs) => [...msgs, res.data.response]);
         } catch (error) {

@@ -1,17 +1,17 @@
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
-console.log(API_URL);
 
-export function getAiResponse_RAG(q, body) {
+export function getAiResponse_RAG(q, userPreference, conversation) {
     // body should be a list of movie ids.
     // q is the query params
     return axios({
         url: `${API_URL}/rag`,
         method: "post",
-        data: body,
-        params: {
+        data: {
             q,
+            userPreference,
+            conversation,
         },
     });
 }

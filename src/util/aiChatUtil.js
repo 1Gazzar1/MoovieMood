@@ -24,17 +24,26 @@ export function getCombinedLists(list1, list2) {
     }
     return messages;
 }
-export async function getAiResponse(userInput, prevAiMsgs, prevUserMsgs) {
+export async function getAiResponse(
+    userInput,
+    prevAiMsgs,
+    prevUserMsgs,
+    userPreference,
+) {
     let res;
+    const fullConversation = formatAiQuery([
+        ...getCombinedLists(prevAiMsgs, prevUserMsgs),
+        userInput,
+    ]);
     const RAG = await needsRAG(userInput);
     if (RAG) {
-        res = await getAiResponse_RAG(userInput);
-    } else {
-        const formattedMsgs = formatAiQuery([
-            ...getCombinedLists(prevAiMsgs, prevUserMsgs),
+        res = await getAiResponse_RAG(
             userInput,
-        ]);
-        res = await getAiResponse_ai(formattedMsgs);
+            userPreference,
+            fullConversation,
+        );
+    } else {
+        res = await getAiResponse_ai(fullConversation);
     }
     return res;
 }
