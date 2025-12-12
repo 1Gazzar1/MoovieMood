@@ -12,7 +12,7 @@ export function MovieProvider({ children }) {
     const [allMovies, setAllMovies] = useState([]);
     const [sortOptions, setSortOptions] = useState({
         sortBy: "release_date",
-        asc: "1",
+        asc: "0",
     });
     const [page, setPage] = useState(1);
     const [tagLists, setTagLists] = useState([

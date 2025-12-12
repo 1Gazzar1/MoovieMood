@@ -19,7 +19,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
-    margin: 0px 5%;
+    margin: 0px 9%;
 }
 
 /* Common filter styles */
@@ -43,7 +43,7 @@
 }
 
 .filterSettings > div {
-    flex: 1 1 180px; 
+    flex: 1 1 180px;
     min-width: 140px;
     display: flex;
     align-items: center;
@@ -55,7 +55,7 @@
     text-align: center;
     display: block;
     margin-bottom: 0.2rem;
-    font-size: 1rem; 
+    font-size: 1rem;
 }
 
 .filterSettings input[type="text"],
@@ -69,7 +69,6 @@ select {
     border: 1px solid #444;
     color: #fff;
 }
-
 
 .filterSettings input[type="range"] {
     accent-color: #ff5050;
@@ -109,6 +108,7 @@ h2 {
     .filtersContainer {
         flex-direction: column;
         align-items: center;
+        margin: 0px 0px ;
     }
 
     .filterSettings,
@@ -127,8 +127,6 @@ h2 {
 }
 
 @media (max-width: 500px) {
-
-
     .filterSettings input[type="text"],
     .filterSettings input[type="range"],
     select {
