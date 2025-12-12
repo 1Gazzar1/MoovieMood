@@ -48,6 +48,7 @@ export function MovieProvider({ children }) {
     const allShownMovies = useMemo(() => {
         let mvs = filterMovies(allMovies, filterSettings);
         mvs = sortMovies(mvs, sortOptions.sortBy, sortOptions.asc);
+        setPage(1);
         return mvs;
     }, [sortOptions, filterSettings, allMovies]);
 
@@ -75,7 +76,7 @@ export function MovieProvider({ children }) {
     const getNextPage = () => {
         const n = Math.ceil(
             filterMovies(allMovies, filterSettings).length / moviesPerPage,
-        ); //maximim number of pages
+        ); //maximum number of pages
         setPage((p) => (p + 1 > n ? p : p + 1));
     };
     const changeFilterSettings = (e) => {
@@ -118,7 +119,7 @@ export function MovieProvider({ children }) {
 
         setSortOptions((prev) => ({ ...prev, [element]: value }));
     }
-    console.log(allMovies.map(m => m.id))
+
     return (
         <MovieContext.Provider
             value={{
