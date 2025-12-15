@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatAiQuery } from "../util/aiChatUtil";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -26,7 +27,7 @@ export function getAiResponse_ai(q) {
     });
 }
 
-function routerAi(userMessage) {
+function routerAi(fullConversation) {
     return axios({
         url: `${API_URL}/ai`,
         method: "post",
@@ -34,16 +35,16 @@ function routerAi(userMessage) {
             q: `
                 You are a classifier for a movie website.
                 Your job: decide if the assistant must perform a database search
-                to answer the user's message.
+                to answer the user's last message/question.
 
                 Respond with EXACTLY one word: "YES" or "NO".
                 No explanations.
-                Message: "${userMessage}"
+                The Conversation: "${fullConversation}"
                             `.trim(),
         },
     });
 }
-export async function needsRAG(userMessage) {
-    const res = await routerAi(userMessage);
+export async function needsRAG(fullConversation) {
+    const res = await routerAi(fullConversation);
     return res.data.response.trim() === "YES";
 }

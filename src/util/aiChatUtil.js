@@ -35,7 +35,7 @@ export async function getAiResponse(
         ...getCombinedLists(prevAiMsgs, prevUserMsgs),
         userInput,
     ]);
-    const RAG = await needsRAG(userInput);
+    const RAG = await needsRAG(fullConversation);
     if (RAG) {
         res = await getAiResponse_RAG(
             userInput,
