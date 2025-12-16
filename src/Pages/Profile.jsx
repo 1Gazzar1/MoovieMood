@@ -47,11 +47,11 @@ function Profile() {
         >
             {movies && movies.length > 0 ? (
                 <>
-                    <div
-                        className="profilePageStatement"
-                    >
+                    <div className="profilePageStatement">
                         <h1>Your Movie Stats</h1>
-                        <p style={{color:"#b5b5b5"}}>yes, you watch trash sometimes.</p>
+                        <p style={{ color: "#b5b5b5" }}>
+                            yes, you watch trash sometimes.
+                        </p>
                     </div>
                     <div className="profileCardContainer">
                         {/* total movies watched card */}
@@ -74,7 +74,7 @@ function Profile() {
                                 </>
                             }
                             content={getAvgRating(movies)}
-                            footer={`Based on ${numberOfMovies}`}
+                            footer={`Based on ${numberOfMovies} Movies`}
                         />
                         {/* Favorite Genre card */}
                         <ProfileCard
