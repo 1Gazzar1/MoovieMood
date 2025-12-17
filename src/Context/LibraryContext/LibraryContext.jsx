@@ -70,7 +70,9 @@ export function LibraryProvider({ children }) {
     const getMovieWatchedAt = (id) => {
         return library.find((m) => m.id === id).watchedAt;
     };
-    const ids = library.filter((m) => m.favorited === true).map((m) => m.id);
+    const favoriteMovieIds = library
+        .filter((m) => m.favorited === true)
+        .map((m) => m.id);
     const movies = getMoviesByIds(
         allMovies,
         library.map((m) => m.id),
@@ -85,7 +87,7 @@ export function LibraryProvider({ children }) {
         unFavoriteMovie,
         getMovieWatchedAt,
         movies,
-        ids,
+        favoriteMovieIds,
     };
     return (
         <LibraryContext.Provider value={contextValue}>

@@ -14,7 +14,7 @@ export function AiChat() {
     const [userInput, setUserInput] = useState("");
     const [aiLoading, setAiLoading] = useState(false);
     const [displayChat, setDisplayChat] = useState(false);
-    const { ids } = useContext(LibraryContext);
+    const { favoriteMovieIds } = useContext(LibraryContext);
 
     function resetChat() {
         setAiLoading(false);
@@ -39,7 +39,7 @@ export function AiChat() {
                 userInput,
                 AiMessages,
                 userMessages,
-                ids,
+                favoriteMovieIds,
             );
             setAiMessages((msgs) => [...msgs, res.data.response]);
         } catch (error) {
