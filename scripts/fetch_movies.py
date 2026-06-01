@@ -124,17 +124,28 @@ def fetchCastByMovieId(apiKey,id) :
     response = requests.get(url)
     if (response.status_code < 300) : 
         
-        data = response.json()
+        try:
+            response.raise_for_status()
+            data = response.json()
+            castMembers = []
     
-        castMembers = []
-    
-        cast_list = data.get('cast', [])
-    
-        for member in cast_list[:5]:
-            castMembers.append(member.get('name', 'Unknown'))
+            cast_list = data.get('cast', [])
+        
+            for member in cast_list[:5]:
+                castMembers.append(member.get('name', 'Unknown'))
         
         
-        return castMembers
+            return castMembers
+        except requests.exceptions.HTTPError:
+            print("HTTP Error:", response.status_code)
+            print(response.text)
+            return []
+        except requests.exceptions.JSONDecodeError:
+            print("Response is not JSON")
+            print(response.text)
+            return []
+    
+        
     return []
 
 def mapGenres(genreIds):
