@@ -122,18 +122,20 @@ genres = {
 def fetchCastByMovieId(apiKey,id) : 
     url = f"https://api.themoviedb.org/3/movie/{id}/credits?api_key={apiKey}"
     response = requests.get(url)
-
-    data = response.json()
-
-    castMembers = []
-
-    cast_list = data.get('cast', [])
-
-    for member in cast_list[:5]:
-        castMembers.append(member.get('name', 'Unknown'))
+    if (response.status_code < 300) : 
+        
+        data = response.json()
     
+        castMembers = []
     
-    return castMembers
+        cast_list = data.get('cast', [])
+    
+        for member in cast_list[:5]:
+            castMembers.append(member.get('name', 'Unknown'))
+        
+        
+        return castMembers
+    return []
 
 def mapGenres(genreIds):
     return [ genres.get(id, "Unknown") for id in genreIds ]
